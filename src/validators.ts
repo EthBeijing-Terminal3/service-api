@@ -20,3 +20,13 @@ export const contractAndChain = validate([
   body('contract_address', '`contract_address` must be a valid evm address').isString().custom(isEthAddress),
   body('chain_id', '`chain_id` must be a string').isString().trim(),
 ]);
+
+export const transaction = validate([
+  body('origin_url', `'origin_url' must ba a url`).isURL(),
+  body('tx_data', `'tx_data' must be a string`).isString(),
+  body('from', `'from' must be a valid evm address`).isString().custom(isEthAddress),
+  body('to', `'to' must be a valid evm address`).isString().custom(isEthAddress),
+  body('gas', `'gas' must be a string`).isString(),
+  body('value', `'value' must be a string`).isString(),
+  body('user_account', `'user_account' must be a valid evm address`).isString().custom(isEthAddress),
+]);

@@ -34,6 +34,31 @@ class ContractAnalysis {
       next(e);
     }
   }
+
+  public async transactionAnalysis(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { origin_url, tx_data, from, to, gas, value, user_account } = req.body;
+
+      const { data } = await axios.post('https://frontend.blowfish.xyz/proxy/api/ethereum/v0/mainnet/scan/transaction', {
+        metadata: { origin: origin_url },
+        txObject: { data: tx_data, from, to, gas, value },
+        userAccount: user_account
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'authority': 'frontend.blowfish.xyz',
+          'origin': 'frontend.blowfish.xyz',
+          'Referer': 'https://protect.blowfish.xyz/',
+          'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
+        }
+      });
+
+      res.status(200).send(data);
+    } catch (e) {
+      logger.error(e);
+      next(e);
+    }
+  }
 }
 
 export default ContractAnalysis;

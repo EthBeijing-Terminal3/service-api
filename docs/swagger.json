@@ -152,6 +152,64 @@
           }
         }
       }
+    },
+    "/transaction/analyze": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "Get transaction analyze",
+        "operationId": "transaction-analyze",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "origin_url": {
+                    "type": "string"
+                  },
+                  "tx_data": {
+                    "type": "string"
+                  },
+                  "from": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "gas": {
+                    "type": "string"
+                  },
+                  "user_account": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionAnalysis"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
@@ -379,6 +437,38 @@
           "Proxy\"": "0",
           "Implementation\"": "",
           "SwarmSource": "bzzr://7dca18479e58487606bf70c79e44d8dee62353c9ee6d01f9a9d70885b8765f22"
+        }
+      },
+      "TransactionAnalysis": {
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "simulationResults": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "expectedStateChanges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "humanReadableDiff": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
