@@ -1,0 +1,137 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Extension API Service",
+    "description": "Core backend service for Terminal 3",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "team@terminal3.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Contract",
+      "description": "Get contract data"
+    }
+  ],
+  "paths": {
+    "/contract/analyze": {
+      "post": {
+        "tags": [
+          "Contract"
+        ],
+        "summary": "Get contract analyze",
+        "operationId": "contract-analyze",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contract_address": {
+                    "type": "string"
+                  },
+                  "chain_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractAnalyze"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/contract/description": {
+      "post": {
+        "tags": [
+          "Contract"
+        ],
+        "summary": "Get contract description",
+        "operationId": "contract-description",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contract_address": {
+                    "type": "string"
+                  },
+                  "chain_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractDescription"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ContractDescription": {
+        "description": "Basic information about the contract",
+        "properties": {
+          "contract_address": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "ContractAnalyze": {
+        "description": "Contract security analyze",
+        "properties": {
+          "contract_address": {
+            "type": "string"
+          },
+          "analyze": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}
