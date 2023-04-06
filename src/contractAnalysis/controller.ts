@@ -1,5 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import {logger} from "../utils/logger";
+import {getDappInfo} from "./service";
 
 
 class ContractAnalysis {
@@ -7,8 +8,9 @@ class ContractAnalysis {
     try {
       const { contract_address, chain_id } = req.body;
 
+      const data = await getDappInfo(chain_id, contract_address);
       // TODO: add analysis
-      res.status(200).send({});
+      res.status(200).send(data);
     } catch (e) {
       logger.error(e);
       next(e);

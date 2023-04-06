@@ -10,3 +10,4 @@ interact.js
 .idea
 .vscode
 swagger.yaml
+.env.default

@@ -50,7 +50,7 @@ export async function start(app: Express) {
   app.use(router);
 
   // Swagger docs
-  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   await initFunction();
 
