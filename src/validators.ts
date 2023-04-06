@@ -9,6 +9,7 @@ export const validate = (validations) => {
     if (errors.isEmpty()) {
       return next();
     }
+    console.log({errors: errors.array()})
     const err = errors.array();
 
     res.status(400).json({message: err[0].msg});
@@ -16,6 +17,6 @@ export const validate = (validations) => {
 };
 
 export const contractAndChain = validate([
-  body('contract_address').isString().custom(isEthAddress),
-  body('chain_id').isString().trim(),
+  body('contract_address', '`contract_address` must be a valid evm address').isString().custom(isEthAddress),
+  body('chain_id', '`chain_id` must be a string').isString().trim(),
 ]);

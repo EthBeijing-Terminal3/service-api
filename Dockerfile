@@ -11,5 +11,5 @@ EXPOSE 4000
 
 ENV NODE_ENV production
 
-RUN npm run builds
+RUN npm run build
 CMD [ "npm", "run", "start" ]

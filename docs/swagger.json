@@ -11,6 +11,9 @@
   },
   "servers": [
     {
+      "url": "https://extension-api.jozhe.com"
+    },
+    {
       "url": "http://localhost:4000"
     }
   ],
@@ -52,7 +55,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContractAnalyze"
+                  "$ref": "#/components/schemas/ContractAnalysis"
                 }
               }
             }
@@ -106,30 +109,276 @@
           }
         }
       }
+    },
+    "/contract/info": {
+      "post": {
+        "tags": [
+          "Contract"
+        ],
+        "summary": "Get contract information",
+        "operationId": "contract-info",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contract_address": {
+                    "type": "string"
+                  },
+                  "chain_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "ContractAnalysis": {
+        "description": "Contract security analyze",
+        "properties": {
+          "anti_whale_modifiable": {
+            "type": "string"
+          },
+          "buy_tax": {
+            "type": "string"
+          },
+          "can_take_back_ownership": {
+            "type": "string"
+          },
+          "cannot_buy": {
+            "type": "string"
+          },
+          "cannot_sell_all": {
+            "type": "string"
+          },
+          "creator_address": {
+            "type": "string"
+          },
+          "creator_balance": {
+            "type": "string"
+          },
+          "creator_percent": {
+            "type": "string"
+          },
+          "dex": {
+            "type": "array"
+          },
+          "external_call": {
+            "type": "string"
+          },
+          "hidden_owner": {
+            "type": "string"
+          },
+          "holder_count": {
+            "type": "string"
+          },
+          "honeypot_with_same_creator": {
+            "type": "string"
+          },
+          "is_anti_whale": {
+            "type": "string"
+          },
+          "is_blacklisted": {
+            "type": "string"
+          },
+          "is_honeypot": {
+            "type": "string"
+          },
+          "is_in_dex": {
+            "type": "string"
+          },
+          "is_mintable": {
+            "type": "string"
+          },
+          "is_open_source": {
+            "type": "string"
+          },
+          "is_proxy": {
+            "type": "string"
+          },
+          "is_whitelisted": {
+            "type": "string"
+          },
+          "lp_holder_count": {
+            "type": "string"
+          },
+          "lp_total_supply": {
+            "type": "string"
+          },
+          "owner_address": {
+            "type": "string"
+          },
+          "owner_balance": {
+            "type": "string"
+          },
+          "owner_change_balance": {
+            "type": "string"
+          },
+          "owner_percent": {
+            "type": "string"
+          },
+          "personal_slippage_modifiable": {
+            "type": "string"
+          },
+          "selfdestruct": {
+            "type": "string"
+          },
+          "sell_tax": {
+            "type": "string"
+          },
+          "slippage_modifiable": {
+            "type": "string"
+          },
+          "token_name": {
+            "type": "string"
+          },
+          "token_symbol": {
+            "type": "string"
+          },
+          "total_supply": {
+            "type": "string"
+          },
+          "trading_cooldown": {
+            "type": "string"
+          },
+          "transfer_pausable": {
+            "type": "string"
+          },
+          "trust_list": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "anti_whale_modifiable": "",
+          "buy_tax": "0",
+          "can_take_back_ownership": "0",
+          "cannot_buy": "0",
+          "cannot_sell_all": "0",
+          "creator_address": "0x1449e0687810bddd356ae6dd87789244a46d9adb",
+          "creator_balance": "0",
+          "creator_percent": "0.000000",
+          "dex": [],
+          "external_call": "0",
+          "hidden_owner": "0",
+          "holder_count": "210110",
+          "honeypot_with_same_creator": "0",
+          "is_anti_whale": "0",
+          "is_blacklisted": "0",
+          "is_honeypot": "0",
+          "is_in_dex": "1",
+          "is_mintable": "0",
+          "is_open_source": "1",
+          "is_proxy": "0",
+          "is_whitelisted": "0",
+          "lp_holder_count": "330",
+          "lp_total_supply": "160.905630834153445382",
+          "owner_address": "",
+          "owner_balance": "0",
+          "owner_change_balance": "0",
+          "owner_percent": "0",
+          "personal_slippage_modifiable": "0",
+          "selfdestruct": "0",
+          "sell_tax": "0",
+          "slippage_modifiable": "0",
+          "token_name": "Compound",
+          "token_symbol": "COMP",
+          "total_supply": "10000000",
+          "trading_cooldown": "0",
+          "transfer_pausable": "0",
+          "trust_list": "1"
+        }
+      },
       "ContractDescription": {
         "description": "Basic information about the contract",
         "properties": {
-          "contract_address": {
+          "ContractName": {
             "type": "string"
           },
-          "description": {
+          "Description": {
             "type": "string"
           }
         }
       },
-      "ContractAnalyze": {
-        "description": "Contract security analyze",
+      "ContractInfo": {
+        "description": "Contract basic info",
         "properties": {
-          "contract_address": {
+          "ContractName": {
             "type": "string"
           },
-          "analyze": {
-            "type": "object"
+          "CompilerVersion": {
+            "type": "string"
+          },
+          "OptimizationUsed": {
+            "type": "string"
+          },
+          "Runs": {
+            "type": "string"
+          },
+          "ConstructorArguments": {
+            "type": "string"
+          },
+          "EVMVersion": {
+            "type": "string"
+          },
+          "Library": {
+            "type": "string"
+          },
+          "LicenseType": {
+            "type": "string"
+          },
+          "Proxy": {
+            "type": "string"
+          },
+          "Implementation": {
+            "type": "string"
+          },
+          "SwarmSource": {
+            "type": "string"
+          },
+          "SourceCode": {
+            "type": "string"
+          },
+          "ABI": {
+            "type": "string"
           }
+        },
+        "example": {
+          "SourceCode": "",
+          "ABI": "",
+          "ContractName": "UniswapV2Pair",
+          "CompilerVersion\"": "v0.5.16+commit.9c3226ce",
+          "OptimizationUsed": "1",
+          "Runs": "999999",
+          "ConstructorArguments": "",
+          "EVMVersion": "Default",
+          "Library\"": "",
+          "LicenseType": "GNU GPLv3",
+          "Proxy\"": "0",
+          "Implementation\"": "",
+          "SwarmSource": "bzzr://7dca18479e58487606bf70c79e44d8dee62353c9ee6d01f9a9d70885b8765f22"
         }
       }
     }
