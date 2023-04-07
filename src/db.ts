@@ -1,6 +1,7 @@
 import { Dialect, Sequelize } from 'sequelize';
 import dbConfig from '../config/db';
 import { logger } from './utils/logger';
+import HistoryPromptModel from "./history/historyPromptSchema";
 
 const { username, dialect, password, database, host, pool } = dbConfig;
 
@@ -27,7 +28,8 @@ sequelize
 
 export { sequelize };
 
-// TODO: add models
-const db = {};
+const db = {
+  HistoryPrompt: HistoryPromptModel(sequelize),
+};
 
 export default db;

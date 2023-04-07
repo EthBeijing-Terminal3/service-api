@@ -30,3 +30,9 @@ export const transaction = validate([
   body('value', `'value' must be a string`).isString(),
   body('user_account', `'user_account' must be a valid evm address`).isString().custom(isEthAddress),
 ]);
+
+export const history = validate([
+  body('account_address', `'account_address' must be a valid evm address`).isString().custom(isEthAddress),
+  body('limit', `'limit' must be a number`).optional({ nullable: true }).isInt({min: 1, max: 100}),
+  body('offset', `'offset' must be a number`).optional({ nullable: true }).isInt({min: 1, max: 100}),
+]);

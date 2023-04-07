@@ -2,13 +2,34 @@ import {NextFunction, Request, Response} from "express";
 import {logger} from "../utils/logger";
 import {getDappInfo} from "./service";
 import axios from "axios";
+import {addToHistory, getHistory} from "../history/historyService";
+
+const DEFAULT_LIMIT = 10;
+const DEFAULT_OFFSET = 0;
 
 class ContractAnalysis {
+  public async getPromptHistory(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { account_address, limit, offset } = req.body;
+
+      const data = await getHistory(account_address, limit || DEFAULT_LIMIT, offset || DEFAULT_OFFSET);
+
+      res.status(200).send(data);
+    } catch (e) {
+      logger.error(e);
+      next(e);
+    }
+  }
+
   public async contractInfo(req: Request, res: Response, next: NextFunction) {
     try {
       const { contract_address, chain_id } = req.body;
 
       const data = await getDappInfo(chain_id, contract_address);
+
+      if (req.body.account_address) {
+        await addToHistory(req.path, req.body.account_address, {contract_address, chain_id}, data);
+      }
 
       res.status(200).send(data);
     } catch (e) {
@@ -27,8 +48,13 @@ class ContractAnalysis {
       }
 
       const { data } = await axios.get(`https://api.gopluslabs.io/api/v1/token_security/${chain_id}?contract_addresses=${contract_address}`);
+      const result = data.result && data.result[contract_address.toLowerCase()] ? data.result[contract_address.toLowerCase()] : data.result;
 
-      res.status(200).send(data.result && data.result[contract_address.toLowerCase()] ? data.result[contract_address.toLowerCase()] : data.result);
+      if (req.body.account_address) {
+        await addToHistory(req.path, req.body.account_address, {contract_address, chain_id}, result);
+      }
+
+      res.status(200).send(result);
     } catch (e) {
       logger.error(e);
       next(e);
@@ -52,6 +78,8 @@ class ContractAnalysis {
           'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
         }
       });
+
+      await addToHistory(req.path, user_account, {origin_url, tx_data, from, to, gas, value, user_account}, data);
 
       res.status(200).send(data);
     } catch (e) {

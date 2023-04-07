@@ -20,7 +20,15 @@
   "tags": [
     {
       "name": "Contract",
-      "description": "Get contract data"
+      "description": "Contract data and analysis"
+    },
+    {
+      "name": "Transaction",
+      "description": "Transaction analysis"
+    },
+    {
+      "name": "History",
+      "description": "Account prompt history"
     }
   ],
   "paths": {
@@ -43,6 +51,10 @@
                   },
                   "chain_id": {
                     "type": "string"
+                  },
+                  "account_address": {
+                    "type": "string",
+                    "nullable": true
                   }
                 }
               }
@@ -56,49 +68,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ContractAnalysis"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/contract/description": {
-      "post": {
-        "tags": [
-          "Contract"
-        ],
-        "summary": "Get contract description",
-        "operationId": "contract-description",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "contract_address": {
-                    "type": "string"
-                  },
-                  "chain_id": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContractDescription"
                 }
               }
             }
@@ -129,6 +98,10 @@
                   },
                   "chain_id": {
                     "type": "string"
+                  },
+                  "account_address": {
+                    "type": "string",
+                    "nullable": true
                   }
                 }
               }
@@ -200,6 +173,54 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TransactionAnalysis"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/history": {
+      "post": {
+        "tags": [
+          "History"
+        ],
+        "summary": "Get account prompt history",
+        "operationId": "history",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account_address": {
+                    "type": "string"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryPrompts"
                 }
               }
             }
@@ -369,17 +390,6 @@
           "trust_list": "1"
         }
       },
-      "ContractDescription": {
-        "description": "Basic information about the contract",
-        "properties": {
-          "ContractName": {
-            "type": "string"
-          },
-          "Description": {
-            "type": "string"
-          }
-        }
-      },
       "ContractInfo": {
         "description": "Contract basic info",
         "properties": {
@@ -465,6 +475,30 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "HistoryPrompts": {
+        "properties": {
+          "prompts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "input": {
+                  "type": "object"
+                },
+                "output": {
+                  "type": "object"
+                },
+                "created_at": {
+                  "type": "string"
                 }
               }
             }

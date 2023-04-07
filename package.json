@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env node dist/src/server.js",
+    "db:migrate": "ts-node umzug.ts",
+    "start": "cross-env npm run db:migrate && cross-env node dist/src/server.js",
     "clean": "rimraf dist",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --ignore-path .gitignore --fix",
-    "dev": "NODE_ENV=development nodemon",
-    "build": "tsc"
+    "dev": "cross-env NODE_ENV=development npm run db:migrate && NODE_ENV=development nodemon",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -48,7 +49,8 @@
     "ts-node": "^10.9.1",
     "tsc-hooks": "^1.1.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.3",
+    "umzug": "^3.2.1"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.21.4",
