@@ -29,9 +29,56 @@
     {
       "name": "History",
       "description": "Account prompt history"
+    },
+    {
+      "name": "Chat",
+      "description": "Create action with AI bot"
     }
   ],
   "paths": {
+    "/chat": {
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Talk to AI bot to create transaction",
+        "operationId": "chat",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account_address": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
+    },
     "/contract/analyze": {
       "post": {
         "tags": [
@@ -201,6 +248,10 @@
                   "account_address": {
                     "type": "string"
                   },
+                  "path": {
+                    "type": "string",
+                    "nullable": true
+                  },
                   "limit": {
                     "type": "integer",
                     "nullable": true
@@ -235,6 +286,23 @@
   },
   "components": {
     "schemas": {
+      "ChatResponse": {
+        "description": "Chat response",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
       "ContractAnalysis": {
         "description": "Contract security analyze",
         "properties": {

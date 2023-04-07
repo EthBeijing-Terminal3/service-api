@@ -10,11 +10,15 @@ export const addToHistory = async (path, accountAddress: string, input: any, out
   });
 };
 
-export const getHistory = async (accountAddress: string, limit: number, offset: number) => {
+export const getHistory = async (accountAddress: string, path: string, limit: number, offset: number) => {
+  let query: any = {account_address: accountAddress};
+
+  if (path) {
+    query = { ...query, path };
+  }
+
   const data = await db.HistoryPrompt.findAll({
-    where: {
-      account_address: accountAddress,
-    },
+    where: query,
     order: [
       ["created_at", "DESC"],
     ],

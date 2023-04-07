@@ -16,6 +16,11 @@ export const validate = (validations) => {
   };
 };
 
+export const chatValidator = validate([
+  body('account_address', `'account_address' must be a valid evm address`).isString().custom(isEthAddress),
+  body('message', `'message' must be a string`).isString(),
+]);
+
 export const contractAndChain = validate([
   body('contract_address', '`contract_address` must be a valid evm address').isString().custom(isEthAddress),
   body('chain_id', '`chain_id` must be a string').isString().trim(),

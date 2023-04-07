@@ -3,6 +3,7 @@ import {logger} from "../utils/logger";
 import {getDappInfo} from "./service";
 import axios from "axios";
 import {addToHistory, getHistory} from "../history/historyService";
+import {chat} from "../conversationService";
 
 const DEFAULT_LIMIT = 10;
 const DEFAULT_OFFSET = 0;
@@ -10,9 +11,23 @@ const DEFAULT_OFFSET = 0;
 class ContractAnalysis {
   public async getPromptHistory(req: Request, res: Response, next: NextFunction) {
     try {
-      const { account_address, limit, offset } = req.body;
+      const { account_address, path, limit, offset } = req.body;
 
-      const data = await getHistory(account_address, limit || DEFAULT_LIMIT, offset || DEFAULT_OFFSET);
+      const data = await getHistory(account_address, path || '', limit || DEFAULT_LIMIT, offset || DEFAULT_OFFSET);
+
+      res.status(200).send(data);
+    } catch (e) {
+      logger.error(e);
+      next(e);
+    }
+  }
+
+  public async chat(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { account_address, message } = req.body;
+
+      const data = await chat(account_address, message);
+      await addToHistory(req.path, account_address, {content: message}, data);
 
       res.status(200).send(data);
     } catch (e) {
