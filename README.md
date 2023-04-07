@@ -1,9 +1,11 @@
 ## Terminal 3 - Service API
 
-- ✅ Contract Info - shows basic information about a contract
-- ✅ Token Contract Analysis - analyses token contract user wants to interact with
-- ✅ Transaction Analysis - analyses transaction user wants to send
+- ✅ Chat - turns chat prompts into transactions
+- ✅ Contract Info - queries information about a contract
+- ✅ Contract Analysis - analyses token contract user wants to interact with for potential vulnerabilities
+- ✅ Transaction Analysis - analyses transaction user wants to execute and highlights potential risks
 - ✅ History - shows history of user's prompts
 
 
-### [Docs](https://extension-api.jozhe.com/)
+### [Docs](https://extension-api.jozhe.com/docs)
+

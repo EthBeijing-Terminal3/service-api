@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Extension API Service",
+    "title": "Terminal 3 API Service",
     "description": "Core backend service for Terminal 3",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {

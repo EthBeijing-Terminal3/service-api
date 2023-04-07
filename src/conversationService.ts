@@ -9,8 +9,8 @@ interface Reply {
 export const chat = async (accountAddress: string, content: string): Promise<Reply> => {
 
   const { data } = await axios.post(baseConfig.chat_url, {
-    id: accountAddress,
-    content,
+    wallet_address: accountAddress,
+    prompt: content,
   }, {
     headers: {
       'Content-Type': 'application/json',
