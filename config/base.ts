@@ -7,4 +7,5 @@ export default {
     bscMainnet: validateEnvVariable(process.env.BSC_MAINNET_API_KEY, 'BSC_MAINNET_API_KEY is not defined', ''),
   },
   chat_url: validateEnvVariable(process.env.CHAT_API_URL, 'CHAT_API_URL in not defined', ''),
+  chat_init_url: validateEnvVariable(process.env.CHAT_API_URL, 'CHAT_INIT_API_URL in not defined', ''),
 };

@@ -19,3 +19,17 @@ export const chat = async (accountAddress: string, content: string): Promise<Rep
 
   return data;
 };
+
+export const chatInit = async (accountAddress: string, content: string): Promise<Reply> => {
+
+  const { data } = await axios.post(baseConfig.chat_init_url, {
+    wallet_address: accountAddress,
+    prompt: content,
+  }, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+
+  return data;
+};
